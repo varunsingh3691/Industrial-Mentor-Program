@@ -110,7 +110,7 @@ const signin = (req, res) => {
 				roles: authorities,
 				accessToken: token,
 				typeID: user.typeID,
-				expiresIn: 86400
+				expiresIn: '86400'
 			});
 		});
 };

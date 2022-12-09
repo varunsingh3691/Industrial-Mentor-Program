@@ -5,7 +5,7 @@ const dbConfig = require('./app/config/db.config');
 const app = express();
 
 var corsOptions = {
-	origin: 'http://localhost:8081'
+	origin: '*'
 };
 
 app.use(cors(corsOptions));
@@ -39,7 +39,7 @@ db.mongoose
 
 // simple route
 app.get('/', (req, res) => {
-	res.json({ message: 'Welcome to bezkoder application.' });
+	res.json({ message: 'Welcome to this application.' });
 });
 
 // routes

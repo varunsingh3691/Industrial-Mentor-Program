@@ -1,5 +1,5 @@
 {
-  "name": "IMP_Express",
+  "name": "imp_express",
   "version": "1.0.0",
   "description": "Backend for KSE industrial mentor program",
   "main": "server.js",
@@ -15,7 +15,7 @@
     "authentication",
     "mongodb"
   ],
-  "author": "bezkoder",
+  "author": "Varun Singh",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,0 +1,4 @@
+{
+    "rapidServerPath": "http://localhost:9000/api",
+    "signin": "/auth/signin"
+}
