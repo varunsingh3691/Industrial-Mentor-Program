@@ -1,0 +1,6 @@
+Registration
+    Admin -----> only through api  http://localhost:9000/api/auth/signup
+                sample request body
+                {"username": "user'sname","email": "useremail", "password":"user'spassword","roles":["admin"], "typeID":1} let the typeId and roles be as it is
+    Mentor ----> An admin can register a Mentor through the front-end easily
+    Student ----> as well through the front-end

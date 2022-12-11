@@ -1,17 +1,122 @@
 import { NavLink } from 'react-router-dom';
-import { FaBars, FaUserAlt } from 'react-icons/fa';
+import { FaBars, FaUserAlt, FaUserFriends } from 'react-icons/fa';
 import { MdMessage } from 'react-icons/md';
-import { BiAnalyse } from 'react-icons/bi';
-import { AiFillHeart } from 'react-icons/ai';
+import { BiAnalyse, BiLogOut } from 'react-icons/bi';
+import { AiFillHeart, AiOutlineUserAdd } from 'react-icons/ai';
+import { HiUserAdd } from 'react-icons/hi';
 import { BsCartCheck } from 'react-icons/bs';
 import { Fragment, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SidebarMenu from './SidebarMenu';
 import './Sidebar.css';
-const routes = [
+import { Container } from 'react-bootstrap';
+
+const adminRoutes = [
 	{
-		path: '/users',
-		name: 'Users',
+		path: '/registerMentor',
+		name: 'Mentor Registration',
+		icon: <HiUserAdd size={30} />
+	},
+	{
+		path: '/assignStudent',
+		name: 'Assign Students ',
+		icon: <FaUserFriends size={30} />
+	},
+	{
+		path: '/analytics',
+		name: 'Analytics',
+		icon: <BiAnalyse size={30} />
+	},
+	{
+		path: '/order',
+		name: 'Order',
+		icon: <BsCartCheck size={30} />
+	},
+
+	{
+		path: '/saved',
+		name: 'Saved',
+		icon: <AiFillHeart size={30} />
+	}
+	// {
+	// 	path: '/settings',
+	// 	name: 'Settings',
+	// 	icon: <BiCog />,
+	// 	exact: true,
+	// 	subRoutes: [
+	// 		{
+	// 			path: '/settings/profile',
+	// 			name: 'Profile ',
+	// 			icon: <FaUser />
+	// 		},
+	// 		{
+	// 			path: '/settings/2fa',
+	// 			name: '2FA',
+	// 			icon: <FaLock />
+	// 		},
+	// 		{
+	// 			path: '/settings/billing',
+	// 			name: 'Billing',
+	// 			icon: <FaMoneyBill />
+	// 		}
+	// 	]
+	// }
+];
+const mentorRoutes = [
+	{
+		path: '/registerMentor',
+		name: 'Mentor Registration',
+		icon: <FaUserAlt size={30} />
+	},
+	{
+		path: '/applyLeave',
+		name: 'Leave Apply',
+		icon: <MdMessage size={30} />
+	},
+	{
+		path: '/analytics',
+		name: 'Analytics',
+		icon: <BiAnalyse size={30} />
+	},
+	{
+		path: '/order',
+		name: 'Order',
+		icon: <BsCartCheck size={30} />
+	},
+
+	{
+		path: '/saved',
+		name: 'Saved',
+		icon: <AiFillHeart size={30} />
+	}
+	// {
+	// 	path: '/settings',
+	// 	name: 'Settings',
+	// 	icon: <BiCog />,
+	// 	exact: true,
+	// 	subRoutes: [
+	// 		{
+	// 			path: '/settings/profile',
+	// 			name: 'Profile ',
+	// 			icon: <FaUser />
+	// 		},
+	// 		{
+	// 			path: '/settings/2fa',
+	// 			name: '2FA',
+	// 			icon: <FaLock />
+	// 		},
+	// 		{
+	// 			path: '/settings/billing',
+	// 			name: 'Billing',
+	// 			icon: <FaMoneyBill />
+	// 		}
+	// 	]
+	// }
+];
+const stuentRoutes = [
+	{
+		path: '/registerMentor',
+		name: 'Mentor Registration',
 		icon: <FaUserAlt size={30} />
 	},
 	{
@@ -62,6 +167,7 @@ const routes = [
 
 const Sidebar = ({ children }) => {
 	const [ isOpen, setIsOpen ] = useState(false);
+
 	const toggle = () => setIsOpen(!isOpen);
 	const showAnimation = {
 		hidden: {
@@ -78,6 +184,54 @@ const Sidebar = ({ children }) => {
 				duration: 0.5
 			}
 		}
+	};
+	var userRole = localStorage.getItem('Role');
+	console.log(userRole);
+	const aptMenu = (presentRole) => {
+		const decidingRoutes = (role) => {
+			switch (role) {
+				case 'ROLE_ADMIN':
+					return adminRoutes;
+				case 'ROLE_MENTOR':
+					return mentorRoutes;
+				case 'ROLE_STUDENT':
+					return stuentRoutes;
+				default:
+					console.log('unknown');
+			}
+		};
+		const decidedRoutes = decidingRoutes(presentRole);
+
+		return decidedRoutes.map((route, index) => {
+			if (route.subRoutes) {
+				return (
+					<SidebarMenu setIsOpen={setIsOpen} route={route} showAnimation={showAnimation} isOpen={isOpen} />
+				);
+			}
+
+			return (
+				<NavLink
+					to={route.path}
+					key={index}
+					className={(navData) => (navData.isActive ? 'link active' : 'link')}
+				>
+					<div className=" icon">{route.icon}</div>
+					<AnimatePresence>
+						{isOpen && (
+							<motion.div
+								variants={showAnimation}
+								initial="hidden"
+								animate="show"
+								exit="hidden"
+								className="link_text"
+							>
+								{route.name}
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</NavLink>
+			);
+		});
 	};
 
 	return (
@@ -115,45 +269,8 @@ const Sidebar = ({ children }) => {
 						</div>
 					</div>
 
-					<section className="routes">
-						{routes.map((route, index) => {
-							if (route.subRoutes) {
-								return (
-									<SidebarMenu
-										setIsOpen={setIsOpen}
-										route={route}
-										showAnimation={showAnimation}
-										isOpen={isOpen}
-									/>
-								);
-							}
-
-							return (
-								<NavLink
-									to={route.path}
-									key={index}
-									className={(navData) => (navData.isActive ? 'link active' : 'link')}
-								>
-									<div className=" icon">{route.icon}</div>
-									<AnimatePresence>
-										{isOpen && (
-											<motion.div
-												variants={showAnimation}
-												initial="hidden"
-												animate="show"
-												exit="hidden"
-												className="link_text"
-											>
-												{route.name}
-											</motion.div>
-										)}
-									</AnimatePresence>
-								</NavLink>
-							);
-						})}
-					</section>
+					<section className="routes">{aptMenu(userRole)}</section>
 				</motion.div>
-
 				<main>{children}</main>
 			</div>
 		</Fragment>

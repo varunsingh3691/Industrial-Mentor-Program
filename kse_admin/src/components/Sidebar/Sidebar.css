@@ -15,7 +15,7 @@ main {
 .sidebar {
   background: rgb(226, 223, 12);
   color: white;
-  height: 100vh;
+  /* height: 100vh; */
   overflow-y: auto;
 }
 
@@ -73,7 +73,7 @@ main {
 }
 .link_text {
   white-space: nowrap;
-  font-size: 20px;
+  font-size: 1em;
 }
 .icon{
   display: flex;

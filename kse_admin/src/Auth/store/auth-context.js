@@ -9,7 +9,6 @@ const AuthContext = createContext({
 	storeCustomData: () => {}
 });
 const calculateRemainingTime = (expirationTime) => {
-	console.log('triggered');
 	const currentTime = new Date().getTime();
 	const adjExpirationTime = new Date(expirationTime).getTime();
 	const remainingDuration = adjExpirationTime - currentTime;

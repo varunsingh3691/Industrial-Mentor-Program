@@ -23,7 +23,11 @@ const LoginForm = (props) => {
 				email: email,
 				password: password
 			});
-			authCtx.login(response.data.accessToken, response.data.expiresIn);
+			if (response.status === 200) {
+				authCtx.login(response.data.accessToken, response.data.expiresIn);
+				authCtx.storeCustomData('typeID', response.data.typeID);
+				authCtx.storeCustomData('Role', response.data.roles[0]);
+			}
 			console.log(response);
 			navigate('/home');
 
