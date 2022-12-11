@@ -1,6 +1,5 @@
 import { Button, Col, Form, Row, Container } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import DatePicker from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
 
 import React, { useState, useEffect } from 'react';
@@ -9,17 +8,15 @@ import './Register.css';
 
 const RegistrationForm = (props) => {
 	const [ showPassword, setShowPassword ] = useState('password');
+	const [ showPasswordDefn, setShowPasswordDefn ] = useState(false);
 	const [ userData, setUserData ] = useState({
 		email: '',
 		password: '',
+		confirmPassword: '',
 		fullName: '',
-		address: '',
-		mobile: '',
 		gender: '',
-		doj: null,
-		type: 3,
-		HODDept: '',
-		teachingDept: ''
+		company: '',
+		designation: ''
 	});
 	const navigate = useNavigate();
 	// const currentCollection = collection(db, 'Users');
@@ -68,11 +65,10 @@ const RegistrationForm = (props) => {
 								});
 							}}
 							type="text"
-							placeholder="Password"
+							placeholder="Full Name"
 						/>
 					</FloatingLabel>
-
-					<FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
+					<FloatingLabel controlId="floatingPasswordConfirm" label="Password" className="mb-3">
 						<Form.Control
 							value={userData.password}
 							onChange={(e) => {
@@ -80,10 +76,39 @@ const RegistrationForm = (props) => {
 									return { ...prev, password: e.target.value };
 								});
 							}}
+							onBlur={() => {
+								console.log('this');
+								setShowPasswordDefn(!showPasswordDefn);
+							}}
+							onFocus={() => {
+								console.log('triggered');
+								setShowPasswordDefn(!showPasswordDefn);
+							}}
 							type={showPassword}
 							placeholder="Password"
 						/>
 					</FloatingLabel>
+					{showPasswordDefn && (
+						<p className="fw-lighter">
+							* Password must contain atleast an Uppercase letter <br />
+							* Password must Containa a special Character<br />
+							* Password should be atleast 8 characters Long<br />
+						</p>
+					)}
+
+					<FloatingLabel controlId="floatingPassword" label="Password" className="mb-3">
+						<Form.Control
+							value={userData.confirmPassword}
+							onChange={(e) => {
+								setUserData((prev) => {
+									return { ...prev, confirmPassword: e.target.value };
+								});
+							}}
+							type={showPassword}
+							placeholder="Password"
+						/>
+					</FloatingLabel>
+
 					<Form.Group className="mb-3" controlId="formBasicCheckbox">
 						<Form.Check
 							onChange={(e) => {
@@ -99,19 +124,6 @@ const RegistrationForm = (props) => {
 						/>
 					</Form.Group>
 
-					<FloatingLabel controlId="floatingInputAddress" label="Address" className="mb-3">
-						<Form.Control
-							type="text"
-							value={userData.address}
-							onChange={(e) => {
-								setUserData((prev) => {
-									return { ...prev, address: e.target.value };
-								});
-							}}
-							placeholder="name@example.com"
-						/>
-					</FloatingLabel>
-
 					<FloatingLabel controlId="floatingInputMobile" label="Mobile" className="mb-3">
 						<Form.Control
 							type="number"
@@ -121,61 +133,29 @@ const RegistrationForm = (props) => {
 									return { ...prev, mobile: e.target.value };
 								});
 							}}
-							placeholder="name@example.com"
+							placeholder="Number"
 						/>
 					</FloatingLabel>
-					<FloatingLabel className="mb-3" controlId="floatingSelect" label="Gender">
-						<Form.Select
+
+					<FloatingLabel controlId="floatingcompanyName" label="Company Name" className="mb-3">
+						<Form.Control
+							value={userData.company}
 							onChange={(e) => {
 								setUserData((prev) => {
-									return { ...prev, gender: e.target.value };
+									return { ...prev, company: e.target.value };
 								});
 							}}
-							aria-label="Floating label select example"
-						>
-							<option value={null}>Select</option>
-							<option value="male">Male</option>
-							<option value="female">Female</option>
-						</Form.Select>
+							type="text"
+							placeholder="Full Name"
+						/>
 					</FloatingLabel>
-					<FloatingLabel
-						className="mb-3"
-						controlId="floatingTeachingDept"
-						label="Select Department you are teaching"
-					>
-						<Form.Select
-							onChange={(e) => {
-								setUserData((prev) => {
-									return { ...prev, teachingDept: e.target.value };
-								});
-							}}
-							aria-label="Floating label select example"
-						>
-							<option value={null}>Select</option>
-							<option value="Computer">Computer</option>
-							<option value="ENTC">ENTC</option>
-							<option value="Mechanical">Mechanical</option>
-						</Form.Select>
-					</FloatingLabel>
-					<DatePicker
-						placeholderText="Date Of Joining"
-						className="form-control mb-3"
-						selected={userData.doj}
-						onChange={(date) => {
-							setUserData((prev) => {
-								return { ...prev, doj: date };
-							});
-						}}
-					/>
+
 					<Container className="p-1 rounded" />
 					<Container className="mt-3 p-0">
 						<Button onClick={submitHandler} variant="primary btn-block" type="button">
 							Register
 						</Button>
 						<span> </span>
-						<Button onClick={navigateToLogin} variant="outline-success" type="button">
-							Back to Login
-						</Button>
 					</Container>
 				</Form>
 			</Col>

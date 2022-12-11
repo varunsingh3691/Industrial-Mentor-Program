@@ -104,3 +104,11 @@ main{
   flex: 1 1 auto;
   overflow: auto;
  }
+ @media (min-height: 900px) {
+  .sidebar {
+    background: rgb(226, 223, 12);
+    color: white;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}

@@ -1,15 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import { FaBars, FaUserAlt, FaUserFriends } from 'react-icons/fa';
 import { MdMessage } from 'react-icons/md';
-import { BiAnalyse, BiLogOut } from 'react-icons/bi';
-import { AiFillHeart, AiOutlineUserAdd } from 'react-icons/ai';
+import { BiAnalyse } from 'react-icons/bi';
+import { AiFillHeart } from 'react-icons/ai';
 import { HiUserAdd } from 'react-icons/hi';
 import { BsCartCheck } from 'react-icons/bs';
 import { Fragment, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SidebarMenu from './SidebarMenu';
 import './Sidebar.css';
-import { Container } from 'react-bootstrap';
 
 const adminRoutes = [
 	{
@@ -186,7 +185,7 @@ const Sidebar = ({ children }) => {
 		}
 	};
 	var userRole = localStorage.getItem('Role');
-	console.log(userRole);
+
 	const aptMenu = (presentRole) => {
 		const decidingRoutes = (role) => {
 			switch (role) {
