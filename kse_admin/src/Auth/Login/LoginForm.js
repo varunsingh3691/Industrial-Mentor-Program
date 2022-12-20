@@ -10,8 +10,9 @@ const LoginForm = (props) => {
 	const [ password, setPassword ] = useState('');
 	const [ showPassword, setShowPassword ] = useState('password');
 	const navigate = useNavigate();
-	const navigateToRegister = () => {
-		navigate('/register');
+	const navigateToRegister = (e) => {
+		e.preventDefault();
+		navigate('/registerStudent');
 	};
 	const authCtx = useContext(AuthContext);
 	const loginSubmitHandler = async (e) => {
@@ -23,15 +24,15 @@ const LoginForm = (props) => {
 				email: email,
 				password: password
 			});
+			const expirationTime = new Date(new Date().getTime() + +response.data.expiresIn * 1000);
 			if (response.status === 200) {
-				authCtx.login(response.data.accessToken, response.data.expiresIn);
+				authCtx.login(response.data.accessToken, expirationTime.toISOString());
 				authCtx.storeCustomData('typeID', response.data.typeID);
 				authCtx.storeCustomData('Role', response.data.roles[0]);
 			}
 			console.log(response);
-			navigate('/home');
 
-			// //TODO add notification feature for proper messages
+			// TODO add notification feature for proper messages
 			setEmail('');
 			setPassword('');
 		} catch (error) {
@@ -83,8 +84,9 @@ const LoginForm = (props) => {
 							Login
 						</Button>
 						<span> </span>
-						<Button onClick={navigateToRegister} className="ml-3" variant="outline-primary">
-							Register
+
+						<Button onClick={navigateToRegister} variant="outline-primary">
+							Register as Student
 						</Button>
 					</Container>
 				</Form>

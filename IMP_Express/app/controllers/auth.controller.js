@@ -8,7 +8,6 @@ var bcrypt = require('bcryptjs');
 
 const signup = (req, res) => {
 	const user = new User({
-		username: req.body.username,
 		email: req.body.email,
 		password: bcrypt.hashSync(req.body.password, 8)
 	});
@@ -45,7 +44,7 @@ const signup = (req, res) => {
 							return;
 						}
 
-						res.send({ message: 'User was registered successfully!' });
+						res.status(201).send({ message: 'User was registered successfully!' });
 					});
 				}
 			);
@@ -63,7 +62,7 @@ const signup = (req, res) => {
 						return;
 					}
 
-					res.send({ message: 'Student was registered successfully!' });
+					res.status(201).send({ message: 'Student was registered successfully!' });
 				});
 			});
 		}
@@ -105,7 +104,6 @@ const signin = (req, res) => {
 			}
 			res.status(200).send({
 				id: user._id,
-				username: user.username,
 				email: user.email,
 				roles: authorities,
 				accessToken: token,

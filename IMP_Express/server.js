@@ -24,7 +24,7 @@ const db = require('./app/models');
 const Role = db.role;
 
 db.mongoose
-	.connect(`mongodb+srv://varunsingh:test@cluster0.6zuyiir.mongodb.net/?retryWrites=true&w=majority`, {
+	.connect(`mongodb+srv://varunsingh:test@test-collection.7db08qy.mongodb.net/?retryWrites=true&w=majority`, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
@@ -46,6 +46,7 @@ app.get('/', (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/mentor.routes')(app);
+require('./app/routes/student.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 9000;

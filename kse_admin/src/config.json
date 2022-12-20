@@ -1,4 +1,7 @@
 {
     "rapidServerPath": "http://localhost:9000/api",
-    "signin": "/auth/signin"
+    "signin": "/auth/signin",
+    "signup": "/auth/signup",
+    "saveMentorData": "/ment/addData",
+    "saveStudentData": "/stud/addData"
 }
