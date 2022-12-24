@@ -8,7 +8,7 @@ import LoginProtected from './Auth/Protection/LoginProtected';
 import PublicRoutes from './Auth/Protection/PublicRoutes';
 import Missing from './components/Missing';
 import StudentRegister from './Auth/Student_Registration/Student_Register';
-import AssignStudent from './components/AssignStudent';
+import AssignStudent from './components/AssignStudents/AssignStudent';
 function App() {
 	return (
 		<Routes>

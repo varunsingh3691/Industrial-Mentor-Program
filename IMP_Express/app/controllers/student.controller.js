@@ -1,8 +1,11 @@
 const config = require('../config/auth.config');
-const { mentor } = require('../models');
+const { mentor, student } = require('../models');
 const db = require('../models');
+const lodash = require('lodash');
 const User = db.user;
 const Student = db.student;
+const Mentor = db.mentor;
+const mongoose = db.mongoose;
 
 const addStudentData = async (req, res) => {
 	try {
@@ -15,7 +18,8 @@ const addStudentData = async (req, res) => {
 					_id: user._id,
 					firstName: req.body.firstName,
 					lastName: req.body.lastName,
-					email: req.body.email
+					email: req.body.email,
+					mentorAssigned: false
 				});
 				addedStudent.save(async (err, student) => {
 					if (err) {
@@ -33,7 +37,28 @@ const addStudentData = async (req, res) => {
 		res.status(500).send({ message: error.message });
 	}
 };
+const getUnassignedStudent = async (req, res) => {
+	try {
+		var finalList = [];
+		await Student.find({}, async (err, students) => {
+			if (!err) {
+				students.forEach((student) => {
+					if (!student.mentorAssigned) {
+						finalList.push(student);
+					}
+				});
+			} else {
+				res.status(500).send({ message: err.message });
+			}
+		});
+		res.status(200).send(finalList);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send({ message: error.message });
+	}
+};
 
 module.exports = {
-	addStudentData: addStudentData
+	addStudentData: addStudentData,
+	getUnassignedStudent: getUnassignedStudent
 };

@@ -3,5 +3,10 @@
     "signin": "/auth/signin",
     "signup": "/auth/signup",
     "saveMentorData": "/ment/addData",
-    "saveStudentData": "/stud/addData"
+    "saveStudentData": "/stud/addData",
+    "getAllMentors": "/ment/getAllMentors",
+    "getAllUnassignedStudents": "/stud/getAllUnassignedStudents",
+    "addMentees": "/ment/addMentees",
+    "getMentees": "/ment/getMenteesOnMentorID",
+    "removeMentees": "/ment/removeMentees"
 }

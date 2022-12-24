@@ -13,7 +13,13 @@ const mentor = mongoose.model(
 		address: String,
 		experience: String,
 		expertise: String,
-		gender: String
+		gender: String,
+		mentees: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Student'
+			}
+		]
 	})
 );
 
