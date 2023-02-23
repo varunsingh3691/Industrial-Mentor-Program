@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Container, Row, Col, Button, Modal } from 'react-bootstrap';
-import config from '../../config.json';
+import config from '../../../config.json';
 import axios from 'axios';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
@@ -10,41 +10,38 @@ import EditMentorForm from './EditMentorForm';
 import AddMenteesForm from './AddMenteesForm';
 import EditMenteesForm from './EditMenteesForm';
 
-// import Select from 'react-select';
 const AssignStudent = () => {
 	const [ mentorsList, setMentorsList ] = useState('');
 	const [ showEdit, setShowEdit ] = useState(false);
 	const [ isUpdated, setIsUpdated ] = useState(false);
 	const [ openedMentor, setOpenedMentor ] = useState({ data: {} });
 	const [ showAddMentees, setShowAddMentees ] = useState(false);
-	const token = localStorage.getItem('token');
+	const token =
+		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOZXdfVXNlcl9EZXRhaWxzIjp7Il9pZCI6IjYzZjYyMWJlYjk4OTBiODA2N2VhMTk3NyIsIk5hbWUiOiJWYXJ1biBTaW5naCIsImVtYWlsSWQiOiJ2YXJ1bjEyMzQ1dHNAZ21haWwuY29tIiwiUGFzc3dvcmQiOiIkMmEkMTIkVkVYQUwzc3ZPNENiVWo5UnQ1TThIZWV3WUU2Rm84ay45Um1yLkxnRVlhUWF0WDR3MkJ0SE8iLCJUeXBlb2ZVc2VyIjoiU3R1ZGVudCIsIl9fdiI6MH0sImlhdCI6MTY3NzA3NjM1NiwiZXhwIjoxNjc3MTYyNzU2fQ.bC2ly2ilKEVY4cXhOihdSMUcBRqd52U-C0k0TtmugpQ';
 	const [ showEditMentees, setShowEditMentees ] = useState('');
 	const [ studentsList, setStudentsList ] = useState('');
 	const [ menteesList, setMenteesList ] = useState('');
 	useEffect(
 		() => {
 			const fetchData = async () => {
-				const url = config.rapidServerPath + config.getAllMentors;
-				const response = await axios.get(url, {
-					headers: {
-						'x-access-token': token
-					}
-				});
-				setMentorsList({ data: response.data });
-				setIsUpdated(false);
+				try {
+					const url = 'http://localhost:9003/api/v1/GetAllMentorList';
+					const response = await axios.get(url);
+					console.log(response.data.data);
+					setMentorsList({ data: response.data.data });
+					setIsUpdated(false);
+				} catch (error) {
+					console.log(error);
+				}
 			};
 			fetchData();
 		},
 		[ token, isUpdated ]
 	);
 	const fetchUnassignedStudentData = async () => {
-		const url = config.rapidServerPath + config.getAllUnassignedStudents;
-		const response = await axios.get(url, {
-			headers: {
-				'x-access-token': token
-			}
-		});
-		setStudentsList({ data: response.data });
+		const url = 'http://localhost:9003/api/v1/GetListOfUnassignedStudents';
+		const response = await axios.get(url);
+		setStudentsList({ data: response.data.data });
 	};
 	const fetchMenteesonMentor = async (data) => {
 		const url = config.rapidServerPath + config.getMentees + '/' + data;
@@ -85,18 +82,18 @@ const AssignStudent = () => {
 	};
 	const gridOptions = {
 		columnDefs: [
-			{
-				field: 'Edit Mentor',
-				cellRenderer: function(params) {
-					return (
-						<Button onClick={() => handleEditOpen(params.data)} variant="primary" size="sm">
-							Edit
-						</Button>
-					);
-				},
-				width: 100,
-				resizable: true
-			},
+			// {
+			// 	field: 'Edit Mentor',
+			// 	cellRenderer: function(params) {
+			// 		return (
+			// 			<Button onClick={() => handleEditOpen(params.data)} variant="primary" size="sm">
+			// 				Edit
+			// 			</Button>
+			// 		);
+			// 	},
+			// 	width: 100,
+			// 	resizable: true
+			// },
 			{
 				field: 'Add Mentees',
 				cellRenderer: function(params) {
@@ -106,7 +103,7 @@ const AssignStudent = () => {
 						</Button>
 					);
 				},
-				width: 150,
+				width: 100,
 				resizable: true
 			},
 			{
@@ -124,65 +121,83 @@ const AssignStudent = () => {
 						</Button>
 					);
 				},
-				width: 150,
+				width: 100,
 				resizable: true
 			},
 			{
-				field: 'firstName',
+				field: 'Mentor_Name',
 				width: 100,
 				sortable: true,
 				filter: true,
-				resizable: true
+				resizable: true,
+				headerName: 'Mentor Name'
 			},
 			{
-				field: 'lastName',
+				field: 'Mentor_Contact_Number',
 				width: 150,
 				sortable: true,
 				filter: true,
-				resizable: true
+				resizable: true,
+				headerName: 'Mobile Number'
 			},
 			{
-				field: 'email',
+				field: 'Mentor_EmailId',
 				width: 200,
 				sortable: true,
 				filter: true,
-				resizable: true
+				resizable: true,
+				headerName: 'Email'
 			},
 			{
-				field: 'mobile',
+				field: 'Mentor_Group_Name',
 				width: 200,
 				sortable: true,
 				filter: true,
-				resizable: true
+				resizable: true,
+				headerName: 'Group Name'
 			},
 			{
-				field: 'designation',
-				width: 200,
+				field: 'Mentor_Organization',
+				width: 220,
 				sortable: true,
 				filter: true,
-				resizable: true
-			},
-			{
-				field: 'address',
-				width: 200,
-				sortable: true,
-				filter: true,
-				resizable: true
-			},
-			{
-				field: 'experience',
-				width: 200,
-				sortable: true,
-				filter: true,
-				resizable: true
-			},
-			{
-				field: 'gender',
-				width: 200,
-				sortable: true,
-				filter: true,
-				resizable: true
+				resizable: true,
+				headerName: 'Organisation Name'
 			}
+			// {
+			// 	field: 'Mentor_LinkedIn',
+			// 	width: 200,
+			// 	sortable: true,
+			// 	filter: true,
+			// 	resizable: true,
+			// 	headerName: 'LinkedIN',
+			// 	cellRenderer: function(params) {
+			// 		return (
+
+			// 		);
+			// 	}
+			// },
+			// {
+			// 	field: 'address',
+			// 	width: 200,
+			// 	sortable: true,
+			// 	filter: true,
+			// 	resizable: true
+			// },
+			// {
+			// 	field: 'experience',
+			// 	width: 200,
+			// 	sortable: true,
+			// 	filter: true,
+			// 	resizable: true
+			// },
+			// {
+			// 	field: 'gender',
+			// 	width: 200,
+			// 	sortable: true,
+			// 	filter: true,
+			// 	resizable: true
+			// }
 		]
 	};
 	return (
@@ -194,30 +209,10 @@ const AssignStudent = () => {
 						<h5 className="heading">Mentor</h5>
 						<AgGridReact rowData={mentorsList.data} gridOptions={gridOptions} />
 
-						{/* EDIT Mentor MODAL */}
-						<Modal
-							size="lg"
-							show={showEdit}
-							onHide={handleEditClose}
-							backdrop="static"
-							keyboard={false}
-							supportedorientations={[ 'portrait', 'landscape' ]}
-						>
-							<Modal.Header closeButton>
-								<Modal.Title>Create User</Modal.Title>
-							</Modal.Header>
-							<Modal.Body>
-								<EditMentorForm
-									mentor={openedMentor}
-									sendUpdate={setIsUpdated}
-									closeModel={handleEditClose}
-								/>
-							</Modal.Body>
-						</Modal>
-
 						{/* ADD MENTEES MODAL */}
 						<Modal
 							size="lg"
+							fullscreen={'xl-down'}
 							show={showAddMentees}
 							onHide={handleAddMenteesClose}
 							backdrop="static"

@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const User = mongoose.model(
 	'User',
 	new mongoose.Schema({
-		email: String,
+		email: {
+			type: String,
+			trim: true
+		},
 		password: String,
-		dataAt: mongoose.Schema.Types.ObjectId,
 		typeID: Number,
 		roles: [
 			{

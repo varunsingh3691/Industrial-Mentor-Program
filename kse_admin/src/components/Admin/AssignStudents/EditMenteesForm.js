@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import config from '../../config.json';
+import config from '../../../config.json';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Container } from 'react-bootstrap';

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import config from '../../config.json';
+import React, { useState } from 'react';
+
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Container } from 'react-bootstrap';
@@ -7,25 +7,23 @@ import { Button, Container } from 'react-bootstrap';
 const AddMenteesForm = (props) => {
 	const [ studentsList, setStudentsList ] = useState('');
 
-	const token = localStorage.getItem('token');
-	useEffect(() => {}, [ token ]);
 	const columns = [
-		{ field: 'firstName', headerName: 'First name', width: 130 },
-		{ field: 'lastName', headerName: 'Last name', width: 130 },
-		{ field: 'email', headerName: 'Email', width: 130 }
+		{ field: 'Student_First_Name', headerName: 'First name', width: 130 },
+		{ field: 'Student_Middle_Name', headerName: 'Middle name', width: 130 },
+		{ field: 'Student_Last_Name', headerName: 'Last name', width: 130 },
+		{ field: 'Student_EmailId', headerName: 'Email', width: 130 }
 	];
 	const assignHandler = async () => {
 		try {
 			if (studentsList.length > 0) {
-				const url = config.rapidServerPath + config.addMentees + '/' + props.mentor.data._id;
+				console.log(props.mentor.data.Mentor_Name);
+				const url = 'http://localhost:9003/api/v1/AssignMentees';
 
-				const resp = await axios.post(
-					url,
-					{
-						mentees: studentsList
-					},
-					{ headers: { 'x-access-token': token } }
-				);
+				const resp = await axios.post(url, {
+					mentorName: props.mentor.data.Mentor_Name,
+					mentees: studentsList,
+					groupName: props.mentor.data.Mentor_Group_Name
+				});
 				if (resp.status === 200) {
 					props.closeModel();
 					props.sendUpdate(true);

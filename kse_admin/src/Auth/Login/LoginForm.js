@@ -27,7 +27,8 @@ const LoginForm = (props) => {
 			const expirationTime = new Date(new Date().getTime() + +response.data.expiresIn * 1000);
 			if (response.status === 200) {
 				authCtx.login(response.data.accessToken, expirationTime.toISOString());
-				authCtx.storeCustomData('typeID', response.data.typeID);
+				authCtx.login(response.data.accessToken, expirationTime.toISOString());
+				authCtx.storeCustomData('uID', response.data.id);
 				authCtx.storeCustomData('Role', response.data.roles[0]);
 			}
 			console.log(response);

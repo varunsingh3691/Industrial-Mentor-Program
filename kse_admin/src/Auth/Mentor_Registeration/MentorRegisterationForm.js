@@ -2,7 +2,7 @@ import { Button, Col, Form, Row, Container } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 // import { useNavigate } from 'react-router-dom';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import axios from 'axios';
 import config from '../../config.json';
@@ -29,10 +29,6 @@ const MentorRegisterationForm = (props) => {
 	// const navigateToLogin = () => {
 	// 	navigate('/login');
 	// };
-	useEffect(() => {
-		const fetchData = async () => {};
-		fetchData();
-	}, []);
 
 	const submitHandler = async (e) => {
 		e.preventDefault();

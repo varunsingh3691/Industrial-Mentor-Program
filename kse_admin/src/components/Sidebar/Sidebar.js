@@ -3,13 +3,15 @@ import { FaBars, FaUserAlt, FaUserFriends } from 'react-icons/fa';
 import { MdMessage } from 'react-icons/md';
 import { BiAnalyse } from 'react-icons/bi';
 import { AiFillHeart } from 'react-icons/ai';
+import { FiLogOut } from 'react-icons/fi';
 import { HiUserAdd } from 'react-icons/hi';
 import { BsCartCheck } from 'react-icons/bs';
-import { Fragment, useState } from 'react';
+import { MdAssignment } from 'react-icons/md';
+import { Fragment, useContext, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import SidebarMenu from './SidebarMenu';
 import './Sidebar.css';
-
+import AuthContext from '../../Auth/store/auth-context';
 const adminRoutes = [
 	{
 		path: '/registerMentor',
@@ -63,13 +65,13 @@ const adminRoutes = [
 ];
 const mentorRoutes = [
 	{
-		path: '/registerMentor',
-		name: 'Mentor Registration',
+		path: '/studentList',
+		name: 'My Students',
 		icon: <FaUserAlt size={30} />
 	},
 	{
-		path: '/applyLeave',
-		name: 'Leave Apply',
+		path: '/assignments',
+		name: 'Assignments',
 		icon: <MdMessage size={30} />
 	},
 	{
@@ -114,9 +116,9 @@ const mentorRoutes = [
 ];
 const stuentRoutes = [
 	{
-		path: '/registerMentor',
+		path: '/myAssignments',
 		name: 'Mentor Registration',
-		icon: <FaUserAlt size={30} />
+		icon: <MdAssignment size={30} />
 	},
 	{
 		path: '/applyLeave',
@@ -185,7 +187,7 @@ const Sidebar = ({ children }) => {
 		}
 	};
 	var userRole = localStorage.getItem('Role');
-
+	const authCtx = useContext(AuthContext);
 	const aptMenu = (presentRole) => {
 		const decidingRoutes = (role) => {
 			switch (role) {
@@ -269,6 +271,22 @@ const Sidebar = ({ children }) => {
 					</div>
 
 					<section className="routes">{aptMenu(userRole)}</section>
+					<div className="logout-section">
+						<div onClick={authCtx.logout} className="icon">
+							<FiLogOut size={30} />
+							{isOpen && (
+								<motion.h1
+									variants={showAnimation}
+									initial="hidden"
+									animate="show"
+									exit="hidden"
+									className="logo"
+								>
+									<div>logout</div>
+								</motion.h1>
+							)}
+						</div>
+					</div>
 				</motion.div>
 				<main>{children}</main>
 			</div>

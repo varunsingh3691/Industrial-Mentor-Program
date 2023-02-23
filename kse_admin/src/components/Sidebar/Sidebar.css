@@ -25,6 +25,14 @@ main {
   justify-content: space-between;
   padding: 15px 10px;
 }
+.logout-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+  position: absolute;
+  bottom: 1px;
+}
 .logo {
   font-size: 18px;
   line-height: 0;

@@ -8,5 +8,9 @@
     "getAllUnassignedStudents": "/stud/getAllUnassignedStudents",
     "addMentees": "/ment/addMentees",
     "getMentees": "/ment/getMenteesOnMentorID",
-    "removeMentees": "/ment/removeMentees"
+    "removeMentees": "/ment/removeMentees",
+    "createAssignment": "/ass/createAssignment",
+    "getAssignmentListOnMentorID": "/ass/getAssignmentList",
+    "getAssignmentFile": "/ass/getAssignment",
+    "getAssignmentList": "/ass/getAssignmentList"
 }

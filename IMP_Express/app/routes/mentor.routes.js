@@ -4,7 +4,8 @@ const controller = require('../controllers/mentor.controller');
 const router = (app) => {
 	app.post('/api/ment/addData', authJwt.verifyToken, authJwt.isAdmin, controller.addMentorData);
 	app.get('/api/ment/getAllMentors', authJwt.verifyToken, authJwt.isAdmin, controller.getAllMentor);
-	app.get('/api/ment/getMenteesOnMentorID/:mentorID', authJwt.verifyToken, authJwt.isAdmin, controller.getMentees);
+	app.get('/api/ment/getMenteesOnMentorID/:mentorID', authJwt.verifyToken, controller.getMentees);
+
 	app.get(
 		'/api/ment/getMentorOnMentorID/:mentorID',
 		authJwt.verifyToken,

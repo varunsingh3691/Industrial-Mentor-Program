@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
 
 const mentor = mongoose.model(
-	'Mentor',
+	'Meeting',
 	new mongoose.Schema({
 		_id: mongoose.Schema.Types.ObjectId,
-		firstName: {
-			type: String,
-			trim: true
+		mentor_id: {
+			type: mongoose.Schema.Types.ObjectId
 		},
 		lastName: {
 			type: String,
 			trim: true
 		},
-		companyName: {
-			type: String,
+		timing: {
+			type: Date,
 			trim: true
 		},
 		mobile: {

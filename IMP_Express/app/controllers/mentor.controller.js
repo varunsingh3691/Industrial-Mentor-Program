@@ -107,8 +107,8 @@ const addMenteesOnMentorID = async (req, res) => {
 		for (var i = 0; i < mentees.length; i++) {
 			addedMentees.push(db.mongoose.Types.ObjectId(mentees[i]));
 			const student = await Student.findOne({ _id: db.mongoose.Types.ObjectId(mentees[i]) });
-
 			student.mentorAssigned = true;
+			student.mentor_id = db.mongoose.Types.ObjectId(req.params.mentorID);
 			await student.save();
 		}
 		doc.mentees = addedMentees;
@@ -130,6 +130,7 @@ const deleteMenteesOnMentorID = async (req, res) => {
 			const x = presentMentees.splice(index, 1);
 			const student = await Student.findOne({ _id: db.mongoose.Types.ObjectId(mentees[i]) });
 			student.mentorAssigned = false;
+			student.mentor_id = null;
 			await student.save();
 		}
 		doc.mentees = presentMentees;
